@@ -1,0 +1,9 @@
+Dataset: ...demo/Datasets/FilmTrust/ratings.txt
+With Setup: cv -k 5 -p on --rand-seed 1 --test-view all
+UserKNN fold [3]: 0.048361,0.080895,0.107594,0.025189,0.109291,0.268864,null,null,null,null	Time: 00:09, 00:27
+UserKNN fold [4]: 0.040175,0.080350,0.108115,0.018211,0.094736,0.256060,null,null,null,null	Time: 00:09, 00:27
+UserKNN fold [1]: 0.045382,0.080255,0.107404,0.026659,0.106986,0.257670,null,null,null,null	Time: 00:09, 00:27
+UserKNN fold [5]: 0.038800,0.073120,0.107920,0.022372,0.095559,0.257351,null,null,null,null	Time: 00:09, 00:28
+UserKNN fold [2]: 0.039557,0.073418,0.108940,0.019430,0.095252,0.266415,null,null,null,null	Time: 00:09, 00:28
+UserKNN,0.042455,0.077608,0.107995,0.022372,0.100365,0.261272,null,null,null,null,,50, PCC, 30,'00:09','00:27'
+
