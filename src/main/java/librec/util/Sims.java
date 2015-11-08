@@ -19,9 +19,13 @@
 package librec.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import librec.data.SparseVector;
 
 /**
  * Similarity measures
@@ -82,7 +86,7 @@ public class Sims {
 	/**
 	 * Calculate Mean Squared Difference (MSD) similarity proposed by Shardanand and Maes [1995]:
 	 * 
-	 * <i>Social information filtering: Algorithms for automating “word of mouth�?/i>
+	 * <i>Social information filtering: Algorithms for automating “word of mouth�?/i>
 	 * 
 	 * @param u
 	 *            user u's ratings
@@ -224,5 +228,88 @@ public class Sims {
 		return 1 - 4 * sum / common * (common - 1);
 
 	}
+	
+	/**
+	 * Jaccard Binary
+	 */
+	public static double jaccardBinary( SparseVector iv, SparseVector jv ){
+		int commonItems = 0;
+		for (int i : iv.getIndexList() ) {
+			if (iv.get(i) > 0 && jv.get(i) > 0) {
+				commonItems++;
+			}
+		}
+		
+		Set< Integer > uniqueSet = new HashSet< Integer >();
+		for( int i : iv.getIndexList() ){
+			if( iv.get( i ) > 0  && jv.get( i ) == 0 ){
+				uniqueSet.add( i );
+			}
+		}
+		
+		for( int i : jv.getIndexList() ){
+			if( jv.get( i ) > 0  && iv.get( i ) == 0 ){
+				uniqueSet.add( i );
+			}
+		}
+		
+		return ( (double) commonItems / uniqueSet.size() );
+	}
+	
+	/**
+	 * Log Likelyhood Similarity
+	 * 
+	 */
+	public static double logllh( SparseVector uItems, SparseVector vItems, int numberOfItems ){
+//		if( uItems. )
+		int commonItems = 0;
+		for (int i : uItems.getIndexList() ) {
+			if (uItems.get(i) > 0 && vItems.get(i) > 0) {
+				commonItems++;
+			}
+		}
+		
+		int uItemSize = 0;
+		for( int i : uItems.getIndexList() ){
+			if( uItems.get( i ) > 0 ){
+				uItemSize++;
+			}
+		}
+		
+		int vItemSize = 0;
+		for( int i : vItems.getIndexList() ){
+			if( vItems.get( i ) > 0 ){
+				vItemSize++;
+			}
+		}
+	
+		double logLikelihood = logLikelihoodRatio( commonItems, uItemSize - commonItems, vItemSize - commonItems, numberOfItems - uItemSize - vItemSize + commonItems );
+		
+		return 1.0 - 1.0  / ( logLikelihood + 1 );
+	}
+	
+	private static double logLikelihoodRatio( int coOccur, int firstSetOnly, int secondSetOnly, int notOccur ){
+		double firstEntropy = entropy( Arrays.asList( new Double[]{ ( double ) ( coOccur + firstSetOnly ), ( double ) ( secondSetOnly + notOccur ) } ) );
+		double secondEntropy = entropy( Arrays.asList( new Double[]{ ( double ) ( coOccur + secondSetOnly ), ( double ) ( firstSetOnly + notOccur ) } ) );
+		double allEntropy = entropy( Arrays.asList( new Double[]{ ( double ) coOccur, ( double ) secondSetOnly, ( double ) firstSetOnly, ( double ) notOccur } ) );
+		if( allEntropy > firstEntropy + secondEntropy ){
+			return 0;
+		}
+		return ( firstEntropy + secondEntropy - allEntropy ) * 2;
+	}
 
+	private static double entropy( List< Double > distribution ){
+		double en = 0;
+		
+		double sum = 0;
+		for( double element : distribution ){
+			sum += element;
+		}
+		
+		for( double element : distribution ){
+			en -= ( element / sum ) * Math.log10( element / sum ) / Math.log10( 2 );
+		}
+		
+		return en;
+	}
 }

@@ -1,0 +1,72 @@
+Dataset: ...ta/network1_bi/book_network1_bi.csv
+With Setup: cv -k 5 -p on -rand-seed 10007 --test-view all
+UserKNN fold [1]: 0.083333,0.065432,0.041975,0.060700,0.093545,0.107104,null,null,null,null	Time: 00:00, 00:04
+UserKNN fold [3]: 0.093567,0.071345,0.049123,0.065988,0.116522,0.151180,null,null,null,null	Time: 00:00, 00:04
+UserKNN fold [4]: 0.068047,0.053254,0.039645,0.060351,0.097617,0.126072,null,null,null,null	Time: 00:00, 00:05
+UserKNN fold [5]: 0.066860,0.063953,0.043023,0.038524,0.094927,0.121679,null,null,null,null	Time: 00:00, 00:05
+UserKNN fold [2]: 0.064327,0.067836,0.050292,0.037839,0.084195,0.126529,null,null,null,null	Time: 00:00, 00:05
+UserKNN,0.075227,0.064364,0.044812,0.052680,0.097361,0.126513,null,null,null,null,,10, exjaccard, -1,'00:00','00:05'
+
+Dataset: ...ta/network1_bi/book_network1_bi.csv
+With Setup: cv -k 5 -p on -rand-seed 10007 --test-view all
+UserKNN fold [3]: 0.075472,0.056604,0.036478,0.055657,0.088719,0.107758,null,null,null,null	Time: 00:00, 00:04
+UserKNN fold [2]: 0.058824,0.062353,0.043529,0.046793,0.095199,0.116271,null,null,null,null	Time: 00:00, 00:04
+UserKNN fold [4]: 0.054545,0.059394,0.050303,0.037626,0.081139,0.123794,null,null,null,null	Time: 00:00, 00:04
+UserKNN fold [5]: 0.090116,0.075581,0.052907,0.055413,0.098193,0.128080,null,null,null,null	Time: 00:00, 00:04
+UserKNN fold [1]: 0.072254,0.058960,0.041040,0.051952,0.095533,0.128157,null,null,null,null	Time: 00:00, 00:04
+UserKNN,0.070242,0.062578,0.044852,0.049488,0.091757,0.120812,null,null,null,null,,10, cos, -1,'00:00','00:04'
+
+Dataset: ...ta/network1_bi/book_network1_bi.csv
+With Setup: cv -k 5 -p on -rand-seed 10007 --test-view all
+UserKNN fold [2]: 0.143678,0.121839,0.097126,0.088565,0.166758,0.231612,null,null,null,null	Time: 00:01, 00:04
+UserKNN fold [4]: 0.130178,0.115976,0.092308,0.063950,0.154862,0.214145,null,null,null,null	Time: 00:01, 00:04
+UserKNN fold [3]: 0.150000,0.123529,0.090000,0.076024,0.161897,0.217382,null,null,null,null	Time: 00:02, 00:04
+UserKNN fold [1]: 0.127219,0.115976,0.086391,0.071823,0.144977,0.207665,null,null,null,null	Time: 00:02, 00:04
+UserKNN fold [5]: 0.162791,0.120930,0.085465,0.107685,0.182453,0.233945,null,null,null,null	Time: 00:02, 00:04
+UserKNN,0.142773,0.119650,0.090258,0.081609,0.162189,0.220950,null,null,null,null,,10, cos-binary, -1,'00:02','00:04'
+
+Dataset: ...ta/network1_bi/book_network1_bi.csv
+With Setup: cv -k 5 -p on -rand-seed 10007 --test-view all
+UserKNN fold [4]: 0.005714,0.004571,0.002286,0.002857,0.005714,0.005714,null,null,null,null	Time: 00:00, 00:02
+UserKNN fold [1]: 0.005682,0.005682,0.003977,0.001136,0.002841,0.003977,null,null,null,null	Time: 00:00, 00:03
+UserKNN fold [2]: 0.006135,0.004908,0.002454,0.003067,0.006135,0.006135,null,null,null,null	Time: 00:00, 00:03
+UserKNN fold [3]: 0.006024,0.006024,0.003012,0.001721,0.004303,0.004303,null,null,null,null	Time: 00:00, 00:03
+UserKNN fold [5]: 0.006024,0.004819,0.002410,0.003012,0.006024,0.006024,null,null,null,null	Time: 00:00, 00:03
+UserKNN,0.005916,0.005201,0.002828,0.002359,0.005003,0.005231,null,null,null,null,,10, cpc, -1,'00:00','00:03'
+
+Dataset: ...ta/network1_bi/book_network1_bi.csv
+With Setup: cv -k 5 -p on -rand-seed 10007 --test-view all
+UserKNN fold [5]: 0.074713,0.072414,0.055172,0.050195,0.093137,0.132740,null,null,null,null	Time: 00:00, 00:05
+UserKNN fold [1]: 0.068571,0.057143,0.038286,0.050302,0.089175,0.107461,null,null,null,null	Time: 00:00, 00:05
+UserKNN fold [2]: 0.073171,0.063415,0.043293,0.040678,0.086261,0.110311,null,null,null,null	Time: 00:00, 00:05
+UserKNN fold [3]: 0.065089,0.066272,0.040828,0.052747,0.117388,0.134507,null,null,null,null	Time: 00:00, 00:05
+UserKNN fold [4]: 0.072254,0.048555,0.033526,0.055331,0.089438,0.109258,null,null,null,null	Time: 00:00, 00:05
+UserKNN,0.070760,0.061560,0.042221,0.049851,0.095080,0.118855,null,null,null,null,,10, msd, -1,'00:00','00:05'
+
+Dataset: ...ta/network1_bi/book_network1_bi.csv
+With Setup: cv -k 5 -p on -rand-seed 10007 --test-view all
+UserKNN fold [4]: 0.006211,0.006211,0.004969,0.001129,0.002823,0.004517,null,null,null,null	Time: 00:00, 00:02
+UserKNN fold [3]: 0.005814,0.003488,0.001744,0.003876,0.005814,0.005814,null,null,null,null	Time: 00:00, 00:02
+UserKNN fold [2]: 0.005882,0.003529,0.001765,0.003922,0.005882,0.005882,null,null,null,null	Time: 00:00, 00:03
+UserKNN fold [1]: 0.005714,0.005714,0.002857,0.001633,0.004082,0.004082,null,null,null,null	Time: 00:00, 00:03
+UserKNN fold [5]: 0.005780,0.002312,0.001156,0.005780,0.005780,0.005780,null,null,null,null	Time: 00:00, 00:03
+UserKNN,0.005880,0.004251,0.002498,0.003268,0.004876,0.005215,null,null,null,null,,10, pcc, -1,'00:00','00:03'
+
+Dataset: ...ta/network1_bi/book_network1_bi.csv
+With Setup: cv -k 5 -p on -rand-seed 10007 --test-view all
+UserKNN fold [4]: 0.137725,0.129341,0.094012,0.089616,0.186372,0.253209,null,null,null,null	Time: 00:01, 00:04
+UserKNN fold [3]: 0.138037,0.111656,0.085276,0.084819,0.155820,0.212008,null,null,null,null	Time: 00:01, 00:04
+UserKNN fold [5]: 0.163636,0.134545,0.098182,0.087922,0.164660,0.217242,null,null,null,null	Time: 00:01, 00:04
+UserKNN fold [2]: 0.146199,0.127485,0.097076,0.091740,0.167853,0.233689,null,null,null,null	Time: 00:01, 00:04
+UserKNN fold [1]: 0.157143,0.124571,0.089714,0.103031,0.187988,0.240467,null,null,null,null	Time: 00:01, 00:05
+UserKNN,0.148548,0.125520,0.092852,0.091425,0.172539,0.231323,null,null,null,null,,10, logllh-binary, -1,'00:01','00:04'
+
+Dataset: ...ta/network1_bi/book_network1_bi.csv
+With Setup: cv -k 5 -p on -rand-seed 10007 --test-view all
+UserKNN fold [1]: 0.159639,0.124096,0.092169,0.123471,0.197599,0.267144,null,null,null,null	Time: 00:02, 00:04
+UserKNN fold [4]: 0.150602,0.120482,0.089759,0.083857,0.156284,0.209886,null,null,null,null	Time: 00:02, 00:04
+UserKNN fold [3]: 0.148810,0.119048,0.101190,0.087402,0.156548,0.240888,null,null,null,null	Time: 00:02, 00:04
+UserKNN fold [5]: 0.149425,0.133333,0.090805,0.076581,0.170388,0.220070,null,null,null,null	Time: 00:02, 00:04
+UserKNN fold [2]: 0.141566,0.132530,0.096386,0.100081,0.197870,0.264736,null,null,null,null	Time: 00:02, 00:04
+UserKNN,0.150008,0.125898,0.094062,0.094278,0.175738,0.240545,null,null,null,null,,10, jaccard-binary, -1,'00:02','00:04'
+

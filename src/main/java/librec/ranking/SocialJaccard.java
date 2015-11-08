@@ -37,8 +37,6 @@ public class SocialJaccard extends SocialRecommender{
 
 	public SocialJaccard( SparseMatrix trainMatrix, SparseMatrix testMatrix, int fold ){
 		super( trainMatrix, testMatrix, fold );
-		
-		similarityMeasure = "exjaccard";
 	}
 	
 	@Override
@@ -80,21 +78,43 @@ public class SocialJaccard extends SocialRecommender{
 			// No connection
 		}
 
-		int test = nns.size();
+//		int test = nns.size();
+//		// For each neighbor in social network:
+//		for( int v : uv.getIndex() ){
+//			try{
+//				double sim = dv.get( v );
+//				if( !nns.containsKey( v ) ){
+//					nns.put( v, sim );
+//				}else{
+//					nns.put( v, sim + nns.get( v ) );
+//				}
+//			}catch( IndexOutOfBoundsException e ){
+//				// e.printStackTrace();
+//			}
+//		}
+		
+		//-----------------------------------------------
+		Map<Integer, Double> nearestSocialNeighbor = new HashMap<>();
 		// For each neighbor in social network:
-		for( int v : uv.getIndex() ){
+		for (int v : uv.getIndex()) {
 			try{
-				double sim = dv.get( v );
-				if( !nns.containsKey( v ) ){
-					nns.put( v, sim );
-				}else{
-					nns.put( v, sim + nns.get( v ) );
-				}
+				nearestSocialNeighbor.put( v, uv.get( v ) );
 			}catch( IndexOutOfBoundsException e ){
-				// e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		
+		List<Map.Entry<Integer, Double>> sorted = Lists.sortMap(nearestSocialNeighbor, true);
+		int max = sorted.size() > knn ? knn : sorted.size();
+		for( int i = 0; i < max; i ++ ){
+			if( nns.containsKey( sorted.get( i ).getKey() ) ){
+				nns.put( sorted.get( i ).getKey(), 2 * nns.remove( sorted.get( i ).getKey() ) );
+			}else{
+				nns.put( sorted.get( i ).getKey(), dv.get( sorted.get( i ).getKey() ) );
+			}
+		}
+		//-----------------------------------------------
+
 		for( int j : jSet ){
 			double rating = 0;
 			for( Map.Entry<Integer, Double> kv : nns.entrySet() ){
@@ -241,14 +261,11 @@ public class SocialJaccard extends SocialRecommender{
 		// for each test user
 		for (int u = 0, um = testMatrix.numRows(); u < um; u++) {
 
-			if (verbose && ((u + 1) % 100 == 0)){
+			if (verbose && ((u + 1) % 1000 == 0)){
 				Logs.debug("{}{} evaluates progress: {} / {}", algoName, foldInfo, u + 1, um);
-				Logs.debug("{} Current P2, P5, P10, R2, R5, R10: {},{},{},{},{}", foldInfo, Stats.mean(precs2), Stats.mean(precs5), Stats.mean(precs10),
+				Logs.debug("{} Current P2, P5, P10, R2, R5, R10: {},{},{},{},{},{}", foldInfo, Stats.mean(precs2), Stats.mean(precs5), Stats.mean(precs10),
 										 Stats.mean(recalls2), Stats.mean(recalls5), Stats.mean(recalls10) );
 			}
-
-			// number of candidate items for all users
-			int numCands = candItems.size();
 
 			// get positive items from test matrix
 			List<Integer> testItems = testMatrix.getColumns(u);
@@ -318,8 +335,6 @@ public class SocialJaccard extends SocialRecommender{
 						sb.append(", ");
 				}
 			}
-
-			int numDropped = numCands - rankedItems.size();
 
 			List<Integer> cutoffs = Arrays.asList(2, 5, 10);
 			Map<Integer, Double> precs = Measures.PrecAt(rankedItems, correctItems, cutoffs);

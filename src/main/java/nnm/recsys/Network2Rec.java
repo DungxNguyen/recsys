@@ -3,21 +3,23 @@ package nnm.recsys;
 import librec.main.LibRec;
 import librec.util.Logs;
 
-public class SociarRec{
+public class Network2Rec{
 
 	public static final String[] CONFIG_FILES = new String[] { 
-			"config/Social/UserKNNNetwork1Bi_Social.conf",
-//	 		"UserKNNNetwork1Uni_Social.conf",
-//			"UserKNNNetwork2_Social.conf", 
-//			"UserKNNNetwork3_Social.conf" 
+
+//			"UserKNNNetwork1Bi.conf",
+//	 		"UserKNNNetwork1Uni.conf",
+			"config/KNN/UserKNNNetwork2.conf", 
+			"config/Social/UserKNNNetwork2_Social.conf" 			
 			};
-	// public static final String CONFIG_FILE = "UserKNN.conf";
+	
 //	public static final String[] CONFIG_FILES = new String[] { 
-//			"UserKNNNetwork1Bi_Social.conf" };
+//			"UserKNNNetwork1Bi.conf" };
+	// public static final String CONFIG_FILE = "UserKNN.conf";
 
 	public static void main( String[] args ) throws Exception{
 		// config logger
-		Logs.config( "log4j_2.xml", true );
+		Logs.config( "log4j.xml", true );
 
 		LibRec librec = new LibRec();
 		librec.setConfigFiles( CONFIG_FILES );

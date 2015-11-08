@@ -3,14 +3,18 @@ package nnm.recsys;
 import librec.main.LibRec;
 import librec.util.Logs;
 
-public class BookmarkRec{
+public class SimilarityRec{
 
 	public static final String[] CONFIG_FILES = new String[] { 
+			"config/Similarity/UserKNNNetwork1Bi.conf",
+	 		"config/Similarity/UserKNNNetwork1Bi_COS.conf",
+	 		"config/Similarity/UserKNNNetwork1Bi_COSBI.conf",
+			"config/Similarity/UserKNNNetwork1Bi_CPC.conf",
+			"config/Similarity/UserKNNNetwork1Bi_MSD.conf",
+			"config/Similarity/UserKNNNetwork1Bi_PCC.conf",
+			"config/Similarity/UserKNNNetwork1Bi_LLLH.conf",
+			"config/Similarity/UserKNNNetwork1Bi_JACBIN.conf"
 
-//			"UserKNNNetwork1Bi.conf",
-//	 		"UserKNNNetwork1Uni.conf",
-			"UserKNNNetwork2.conf", 
-			"UserKNNNetwork3.conf" 			
 			};
 	
 //	public static final String[] CONFIG_FILES = new String[] { 

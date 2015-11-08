@@ -463,6 +463,9 @@ public abstract class Recommender implements Runnable {
 		SymmMatrix corrs = new SymmMatrix(count);
 
 		for (int i = 0; i < count; i++) {
+			if( (i + 1) % 1000 == 0 ){
+				Logs.debug("{}, building at user {}", foldInfo, i + 1 );
+			}
 			SparseVector iv = isUser ? trainMatrix.row(i) : trainMatrix.column(i);
 			if (iv.getCount() == 0)
 				continue;
@@ -535,6 +538,12 @@ public abstract class Recommender implements Runnable {
 			break;
 		case "exjaccard":
 			sim = Sims.exJaccard(is, js);
+			break;
+		case "logllh-binary":
+			sim = Sims.logllh( iv, jv, numItems );
+			break;
+		case "jaccard-binary":
+			sim = Sims.jaccardBinary( iv, jv );
 			break;
 		case "pcc":
 		default:

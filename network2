@@ -1,0 +1,19 @@
+Dataset: ./data/network2/book_network2.csv
+With Setup: cv -k 5 -p on -rand-seed 10007 --test-view all
+UserKNN fold [1]: 0.047136,0.036918,0.028863,0.020709,0.037357,0.054540,null,null,null,null	Time: 25:44, 01:09:12
+UserKNN fold [5]: 0.046393,0.035934,0.027683,0.022383,0.039878,0.057184,null,null,null,null	Time: 23:57, 01:11:33
+UserKNN fold [2]: 0.047758,0.036175,0.028677,0.021746,0.038362,0.057485,null,null,null,null	Time: 24:52, 01:11:12
+UserKNN fold [4]: 0.048353,0.036597,0.028496,0.023404,0.039620,0.058167,null,null,null,null	Time: 24:17, 01:11:55
+UserKNN fold [3]: 0.043273,0.033762,0.026886,0.019517,0.034990,0.051914,null,null,null,null	Time: 26:41, 01:10:38
+UserKNN,0.046583,0.035877,0.028121,0.021552,0.038041,0.055858,null,null,null,null,,5, cos-binary, -1,'25:06','01:10:54'
+
+Dataset: ./data/network2/book_network2.csv
+With Setup: cv -k 5 -p on -rand-seed 10007 --test-view all
+Dataset: ...ata/network2/network2_relations.csv
+SocialJaccard fold [1]: 0.054256,0.039671,0.030126,0.023990,0.041131,0.060228,null,null,null,null	Time: 23:42, 01:54:28
+SocialJaccard fold [4]: 0.053296,0.039882,0.031289,0.025986,0.043817,0.062457,null,null,null,null	Time: 24:18, 01:55:17
+SocialJaccard fold [2]: 0.052758,0.039974,0.030560,0.025011,0.043049,0.062700,null,null,null,null	Time: 23:49, 01:56:21
+SocialJaccard fold [3]: 0.054486,0.039606,0.030361,0.023773,0.041220,0.060725,null,null,null,null	Time: 22:54, 01:57:27
+SocialJaccard fold [5]: 0.052979,0.038998,0.030523,0.024861,0.041748,0.062007,null,null,null,null	Time: 24:13, 01:57:34
+SocialJaccard,0.053555,0.039626,0.030572,0.024724,0.042193,0.061624,null,null,null,null,,5, cos-binary, -1,'23:47','01:56:14'
+

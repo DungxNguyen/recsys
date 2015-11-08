@@ -227,7 +227,7 @@ public class UserKNN extends Recommender {
 		// for each test user
 		for (int u = 0, um = testMatrix.numRows(); u < um; u++) {
 
-			if (verbose && ((u + 1) % 100 == 0)){
+			if (verbose && ((u + 1) % 1000 == 0)){
 				Logs.debug("{}{} evaluates progress: {} / {}", algoName, foldInfo, u + 1, um);
 				Logs.debug("{},Current P2, P5, P10, R2, R5, R10: {},{},{},{},{},{}", foldInfo, Stats.mean(precs2), Stats.mean(precs5), Stats.mean(precs10),
 										 Stats.mean(recalls2), Stats.mean(recalls5), Stats.mean(recalls10) );
