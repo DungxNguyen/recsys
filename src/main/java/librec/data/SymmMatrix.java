@@ -107,6 +107,10 @@ public class SymmMatrix implements Serializable {
 
 		return res;
 	}
+	
+	public int size(){
+		return data.size();
+	}
 
 	@Override
 	public String toString() {

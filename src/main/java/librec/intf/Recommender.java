@@ -479,7 +479,7 @@ public abstract class Recommender implements Runnable {
 					corrs.set(i, j, sim);
 			}
 		}
-
+		Logs.debug("{}, correlation matrix size: {}", foldInfo, corrs.size() );
 		return corrs;
 	}
 

@@ -39,11 +39,11 @@ import com.google.common.cache.LoadingCache;
 public abstract class SocialRecommender extends IterativeRecommender {
 
 	// social data dao
-	protected static DataDAO socialDao;
+	protected DataDAO socialDao;
 
 	// socialMatrix: social rate matrix, indicating a user is connecting to a number of other users
 	// trSocialMatrix: inverse social matrix, indicating a user is connected by a number of other users
-	protected static SparseMatrix socialMatrix;
+	protected SparseMatrix socialMatrix;
 
 	// social regularization
 	protected static float regS;
@@ -55,8 +55,25 @@ public abstract class SocialRecommender extends IterativeRecommender {
 	protected LoadingCache<Integer, SparseVector> socialCache;
 	protected LoadingCache<Integer, List<Integer>> userFriendsCache;
 
-	// initialization
-	static {
+//	// initialization
+//	static {
+//		String socialPath = cf.getPath("dataset.social");
+//		Logs.debug("Social dataset: {}", Strings.last(socialPath, 38));
+//
+//		socialDao = new DataDAO(socialPath, rateDao.getUserIds());
+//
+//		try {
+//			socialMatrix = socialDao.readData()[0];
+//			numUsers = socialDao.numUsers();
+//
+//			//socialCache = socialMatrix.rowCache(cacheSpec);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			System.exit(-1);
+//		}
+//	}
+	
+	public void init() {
 		String socialPath = cf.getPath("dataset.social");
 		Logs.debug("Social dataset: {}", Strings.last(socialPath, 38));
 
@@ -74,12 +91,16 @@ public abstract class SocialRecommender extends IterativeRecommender {
 	}
 
 	public SocialRecommender(SparseMatrix trainMatrix, SparseMatrix testMatrix, int fold) {
+		
 		super(trainMatrix, testMatrix, fold);
+		
+		init();
 
 		if (resetStatics) {
 			resetStatics = false;
 			regS = regOptions.getFloat("-s", reg);
 		}
+		
 	}
 
 	@Override

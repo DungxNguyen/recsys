@@ -110,7 +110,11 @@ public class SocialJaccard extends SocialRecommender{
 			if( nns.containsKey( sorted.get( i ).getKey() ) ){
 				nns.put( sorted.get( i ).getKey(), 2 * nns.remove( sorted.get( i ).getKey() ) );
 			}else{
-				nns.put( sorted.get( i ).getKey(), dv.get( sorted.get( i ).getKey() ) );
+				try{
+					nns.put( sorted.get( i ).getKey(), dv.get( sorted.get( i ).getKey() ) );
+				}catch( IndexOutOfBoundsException e ){
+					Logs.debug( e.getMessage() );
+				}
 			}
 		}
 		//-----------------------------------------------

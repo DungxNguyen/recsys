@@ -9,8 +9,8 @@ public class Network2Rec{
 
 //			"UserKNNNetwork1Bi.conf",
 //	 		"UserKNNNetwork1Uni.conf",
-			"config/KNN/UserKNNNetwork2.conf", 
-			"config/Social/UserKNNNetwork2_Social.conf" 			
+			"config/KNN/UserKNNNetwork1Bi.conf", 
+			"config/Social/UserKNNNetwork1Bi_Social.conf" 			
 			};
 	
 //	public static final String[] CONFIG_FILES = new String[] { 

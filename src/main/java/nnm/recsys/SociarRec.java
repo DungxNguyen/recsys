@@ -6,7 +6,14 @@ import librec.util.Logs;
 public class SociarRec{
 
 	public static final String[] CONFIG_FILES = new String[] { 
-			"config/Social/UserKNNNetwork1Bi_Social.conf",
+			"config/5/UserKNNNetwork2_Social.conf",
+//			"config/5/UserKNNNetwork1Bi.conf",
+			"config/10/UserKNNNetwork1Bi_Social.conf",
+//			"config/10/UserKNNNetwork1Bi.conf",
+			"config/15/UserKNNNetwork1Bi_Social.conf",
+//			"config/15/UserKNNNetwork1Bi.conf",
+			"config/20/UserKNNNetwork1Bi_Social.conf",
+//			"config/20/UserKNNNetwork1Bi.conf",
 //	 		"UserKNNNetwork1Uni_Social.conf",
 //			"UserKNNNetwork2_Social.conf", 
 //			"UserKNNNetwork3_Social.conf" 

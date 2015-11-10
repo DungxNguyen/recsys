@@ -7,10 +7,10 @@ public class BookmarkRec{
 
 	public static final String[] CONFIG_FILES = new String[] { 
 
-//			"UserKNNNetwork1Bi.conf",
+			"config/KNN/UserKNNNetwork1Bi.conf",
 //	 		"UserKNNNetwork1Uni.conf",
-			"UserKNNNetwork2.conf", 
-			"UserKNNNetwork3.conf" 			
+//			"UserKNNNetwork2.conf", 
+//			"UserKNNNetwork3.conf" 			
 			};
 	
 //	public static final String[] CONFIG_FILES = new String[] { 
