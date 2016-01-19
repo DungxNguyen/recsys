@@ -55,6 +55,8 @@ import librec.intf.GraphicRecommender;
 import librec.intf.IterativeRecommender;
 import librec.intf.Recommender;
 import librec.intf.Recommender.Measure;
+import librec.ranking.ALSWR;
+import librec.ranking.Amplified;
 import librec.ranking.BHfree;
 import librec.ranking.BPR;
 import librec.ranking.BUCM;
@@ -65,11 +67,13 @@ import librec.ranking.GBPR;
 import librec.ranking.ItemBigram;
 import librec.ranking.LDA;
 import librec.ranking.LRMF;
+import librec.ranking.MatrixCoefficient;
 import librec.ranking.RankALS;
 import librec.ranking.RankSGD;
 import librec.ranking.SBPR;
 import librec.ranking.SLIM;
-import librec.ranking.SocialJaccard;
+import librec.ranking.Social;
+import librec.ranking.SocialWithCF;
 import librec.ranking.WBPR;
 import librec.ranking.WRMF;
 import librec.rating.BPMF;
@@ -139,6 +143,10 @@ public class LibRec {
 		// multiple runs at one time
 		for (String config : configFiles) {
 
+			if(config == null){
+				continue;
+			}
+			
 			// reset general settings
 			preset(config);
 
@@ -146,7 +154,7 @@ public class LibRec {
 			readData();
 
 			// run a specific algorithm
-			run();
+			launch();
 		}
 
 		// collect results
@@ -386,7 +394,7 @@ public class LibRec {
 	 * run a specific algorithm one or multiple times
 	 * 
 	 */
-	protected void run() throws Exception {
+	protected void launch() throws Exception {
 
 		// evaluation setup
 		String setup = cf.getString("evaluation.setup");
@@ -405,7 +413,7 @@ public class LibRec {
 	 * prepare training and test data, and then run a specified recommender
 	 * 
 	 */
-	private void runAlgorithm(LineConfiger evalOptions) throws Exception {
+	protected void runAlgorithm(LineConfiger evalOptions) throws Exception {
 
 		DataSplitter ds = new DataSplitter(rateMatrix);
 		SparseMatrix[] data = null;
@@ -484,6 +492,7 @@ public class LibRec {
 
 		algo = getRecommender(data, -1);
 		algo.execute();
+		
 
 		printEvalInfo(algo, algo.measures);
 	}
@@ -816,8 +825,15 @@ public class LibRec {
 		
 			//Social Jaccard:
 		case "social_jaccard":
-			return new SocialJaccard( trainMatrix, testMatrix, fold );
-
+			return new SocialWithCF( trainMatrix, testMatrix, fold );
+		case "social":
+			return new Social( trainMatrix, testMatrix, fold );
+		case "matrix_coefficient":
+			return new MatrixCoefficient(trainMatrix, testMatrix, fold);
+		case "amplified":
+			return new Amplified(trainMatrix, testMatrix, fold);
+		case "alswr":
+			return new ALSWR(trainMatrix, testMatrix, fold);
 		default:
 			throw new Exception("No recommender is specified!");
 		}
