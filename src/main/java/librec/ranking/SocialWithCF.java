@@ -1,14 +1,14 @@
 package librec.ranking;
 
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import librec.data.Configuration;
 import librec.data.DenseVector;
@@ -16,7 +16,6 @@ import librec.data.SparseMatrix;
 import librec.data.SparseVector;
 import librec.data.SymmMatrix;
 import librec.intf.SocialRecommender;
-import librec.intf.Recommender.Measure;
 import librec.util.FileIO;
 import librec.util.Lists;
 import librec.util.Logs;
@@ -25,22 +24,25 @@ import librec.util.Stats;
 import librec.util.Strings;
 
 @Configuration("knn, similarity, shrinkage")
-public class SocialJaccard extends SocialRecommender{
+public class SocialWithCF extends SocialRecommender{
 	
 	// user: nearest neighborhood
-	private SymmMatrix userCorrs;
-	private DenseVector userMeans;
+	protected SymmMatrix userCorrs;
+	protected DenseVector userMeans;
+	
+	protected double overlappedRatio = 0;
+	protected int testCount = 0;
 	
 	static{
 		resetStatics = false;
 	}
 
-	public SocialJaccard( SparseMatrix trainMatrix, SparseMatrix testMatrix, int fold ){
+	public SocialWithCF( SparseMatrix trainMatrix, SparseMatrix testMatrix, int fold ){
 		super( trainMatrix, testMatrix, fold );
 	}
 	
 	@Override
-	protected void initModel() throws Exception {
+	public void initModel() throws Exception {
 		userCorrs = buildCorrs(true);
 		userMeans = new DenseVector(numUsers);
 		for (int u = 0; u < numUsers; u++) {
@@ -49,7 +51,7 @@ public class SocialJaccard extends SocialRecommender{
 		}
 	}
 	
-	protected Map< Integer, Double > predict( int u, Set<Integer> jSet ){
+	public Map< Integer, Double > predict( int u, Set<Integer> jSet ){
 		Map< Integer, Double > ratings = new HashMap< Integer, Double >();
 		
 		// find a number of similar users
@@ -106,9 +108,11 @@ public class SocialJaccard extends SocialRecommender{
 		
 		List<Map.Entry<Integer, Double>> sorted = Lists.sortMap(nearestSocialNeighbor, true);
 		int max = sorted.size() > knn ? knn : sorted.size();
+		int overlapped = 0;
 		for( int i = 0; i < max; i ++ ){
 			if( nns.containsKey( sorted.get( i ).getKey() ) ){
-				nns.put( sorted.get( i ).getKey(), 2 * nns.remove( sorted.get( i ).getKey() ) );
+				overlapped++;
+//				nns.put( sorted.get( i ).getKey(), 2 * nns.remove( sorted.get( i ).getKey() ) );
 			}else{
 				try{
 					nns.put( sorted.get( i ).getKey(), dv.get( sorted.get( i ).getKey() ) );
@@ -116,6 +120,9 @@ public class SocialJaccard extends SocialRecommender{
 					Logs.debug( e.getMessage() );
 				}
 			}
+		}
+		if( max != 0 ){
+			overlappedRatio = ( overlappedRatio * testCount + (double) overlapped / max ) / (++testCount);
 		}
 		//-----------------------------------------------
 
@@ -368,6 +375,8 @@ public class SocialJaccard extends SocialRecommender{
 			FileIO.writeList(toFile, preds, true);
 			Logs.debug("{}{} has writeen item recommendations to {}", algoName, foldInfo, toFile);
 		}
+		
+		Logs.debug( "Overlapped Ratio: {}", overlappedRatio );
 
 		// measure the performance
 		Map<Measure, Double> measures = new HashMap<>();

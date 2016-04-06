@@ -43,7 +43,7 @@ public abstract class SocialRecommender extends IterativeRecommender {
 
 	// socialMatrix: social rate matrix, indicating a user is connecting to a number of other users
 	// trSocialMatrix: inverse social matrix, indicating a user is connected by a number of other users
-	protected SparseMatrix socialMatrix;
+	public SparseMatrix socialMatrix;
 
 	// social regularization
 	protected static float regS;

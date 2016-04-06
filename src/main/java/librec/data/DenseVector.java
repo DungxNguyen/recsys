@@ -278,6 +278,21 @@ public class DenseVector implements Serializable {
 
 		return mat;
 	}
+	
+	/**
+	 * Do vector operation: {@code a * b^t}
+	 * 
+	 * @return the outer product of two vectors
+	 */
+	public DenseMatrix outer(SparseVector vec) {
+		DenseMatrix mat = new DenseMatrix(this.size, vec.size() );
+
+		for (int i = 0; i < mat.numRows; i++)
+			for (int j = 0; j < mat.numColumns; j++)
+				mat.set(i, j, get(i) * vec.get(j));
+
+		return mat;
+	}
 
 	@Override
 	public String toString() {

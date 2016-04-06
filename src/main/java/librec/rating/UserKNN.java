@@ -18,23 +18,27 @@
 
 package librec.rating;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import librec.data.Configuration;
+import librec.data.DataDAO;
 import librec.data.DenseVector;
 import librec.data.SparseMatrix;
 import librec.data.SparseVector;
 import librec.data.SymmMatrix;
 import librec.intf.Recommender;
-import librec.intf.Recommender.Measure;
 import librec.util.FileIO;
 import librec.util.Lists;
 import librec.util.Logs;
@@ -82,7 +86,7 @@ public class UserKNN extends Recommender {
 		}
 	}
 	
-	protected Map<Integer, Double> predict( int u, Set<Integer> jSet ){
+	public Map<Integer, Double> predict( int u, Set<Integer> jSet ){
 		Map<Integer, Double> ratings = new HashMap< Integer, Double >();
 		
 		// find a number of similar users
@@ -338,5 +342,25 @@ public class UserKNN extends Recommender {
 		measures.put(Measure.Rec10, Stats.mean(recalls10));
 
 		return measures;
+	}
+	
+	@Override
+	public void printInfo( String fileName ){
+		try{
+			PrintWriter printer = new PrintWriter( new BufferedWriter( new FileWriter( new File( fileName ) ) ) );
+			
+			for (int u = 0; u < numUsers; u++) {
+				String invertedU = rateDao.getUserId( u );
+				SparseVector uv = userCorrs.row(u);
+				for( int v : uv.getIndex() ){
+					String invertedV = rateDao.getUserId( v );
+					printer.println( invertedU + "," + invertedV + "," + uv.get(v) );
+				}
+			}
+			
+			printer.close();
+		}catch( Exception e ){
+			e.printStackTrace();
+		}
 	}
 }

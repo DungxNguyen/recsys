@@ -78,7 +78,7 @@ public abstract class Recommender implements Runnable {
 	protected static int numCPUs;
 
 	// verbose
-	protected static boolean verbose = true;
+	protected static boolean verbose = false;
 
 	// line configer for item ranking, evaluation
 	protected static LineConfiger rankOptions, algoOptions;
@@ -175,7 +175,9 @@ public abstract class Recommender implements Runnable {
 		/* prediction-based measures */
 		MAE, RMSE, NMAE, rMAE, rRMSE, MPE, Perplexity,
 		/* ranking-based measures */
-		D5, D10, Pre2, Rec2, Pre5, Pre10, Rec5, Rec10, MAP, MRR, NDCG, AUC,
+		D5, D10, Pre2, Rec2, Pre5, Pre10, Rec5, Rec10, MAP, MRR, NDCG, AUC, 
+		/* F1 Scores*/
+		F1, F1_1, F1_2, F1_3, F1_4, F1_5, F1_6, F1_7, F1_8, F1_9,
 		/* execution time */
 		TrainTime, TestTime,
 		/* loss value */
@@ -406,7 +408,7 @@ public abstract class Recommender implements Runnable {
 	/**
 	 * @return the evaluation information of a recommend
 	 */
-	public static String getEvalInfo(Map<Measure, Double> measures) {
+	public String getEvalInfo(Map<Measure, Double> measures) {
 		String evalInfo = null;
 		if (isRankingPred) {
 			if (isDiverseUsed)
@@ -475,7 +477,7 @@ public abstract class Recommender implements Runnable {
 
 				double sim = correlation(iv, jv);
 
-				if (!Double.isNaN(sim))
+				if (!Double.isNaN(sim) && sim != 0)
 					corrs.set(i, j, sim);
 			}
 		}
@@ -920,6 +922,10 @@ public abstract class Recommender implements Runnable {
 	protected double predict(int u, int j) throws Exception {
 		return globalMean;
 	}
+	
+	public Map<Integer, Double> predict( int u, Set<Integer> jSet ){
+		return null;
+	}
 
 	protected double perplexity(int u, int j, double r) throws Exception {
 		return 0;
@@ -1055,5 +1061,9 @@ public abstract class Recommender implements Runnable {
 
 		// get parameters of an algorithm
 		algoOptions = getModelParams(algoName);
+	}
+	
+	public void printInfo( String fileName ){
+		
 	}
 }

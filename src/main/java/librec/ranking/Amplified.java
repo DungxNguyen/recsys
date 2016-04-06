@@ -17,7 +17,7 @@ public class Amplified extends SocialWithCF {
 		// TODO Auto-generated constructor stub
 	}
 
-	protected Map< Integer, Double > predict( int u, Set<Integer> jSet ){
+	public Map< Integer, Double > predict( int u, Set<Integer> jSet ){
 		Map< Integer, Double > ratings = new HashMap< Integer, Double >();
 		
 		// find a number of similar users

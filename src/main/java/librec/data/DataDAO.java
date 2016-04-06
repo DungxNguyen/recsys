@@ -777,4 +777,12 @@ public class DataDAO {
 	public void setHeadline(boolean isHeadline) {
 		this.isHeadline = isHeadline;
 	}
+	
+	public boolean isExistedRawUserId( String rawId ){
+		return userIds.containsKey( rawId );
+	}
+	
+	public boolean isExistedRawItemId( String rawId ){
+		return itemIds.containsKey( rawId );
+	}
 }

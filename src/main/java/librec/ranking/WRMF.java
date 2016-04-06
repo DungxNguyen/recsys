@@ -55,6 +55,33 @@ public class WRMF extends IterativeRecommender {
 		alpha = algoOptions.getFloat("-alpha");
 		// checkBinary();
 	}
+	
+//	protected void initModel() throws Exception {
+//
+//		P = new DenseMatrix(numUsers, numFactors);
+//		Q = new DenseMatrix(numItems, numFactors);
+//		
+//		P.setAll( 1.0 );
+//		Q.setAll( 1.0 );
+//
+////		// initialize model
+////		if (initByNorm) {
+////			P.init(initMean, initStd);
+////			Q.init(initMean, initStd);
+////		} else if( initMahout ) {
+////			P.init();
+////			Q.init();
+////			DenseVector firstRow = new DenseVector( Q.numColumns() );
+////			firstRow.setAll( globalMean );
+////			Q.setRow( 0, firstRow );
+////		} else {
+////			P.init(); // P.init(smallValue);
+////			Q.init(); // Q.init(smallValue);
+////		}
+//		
+//		//TODO Initialize as Mahout
+//
+//	}
 
 	@Override
 	protected void buildModel() throws Exception {
@@ -69,10 +96,9 @@ public class WRMF extends IterativeRecommender {
 			// Step 1: update user factors;
 			DenseMatrix Yt = Y.transpose();
 			DenseMatrix YtY = Yt.mult(Y);
-			for (int u = 0; u < numUsers; u++) {
+			for (int u = 0; u < 1; u++) {
 				if (verbose && (u + 1) % 200 == 0)
-					Logs.debug("{}{} runs at iteration = {}, user = {}/{}", algoName, foldInfo, iter, u + 1, numUsers);
-
+					Logs.debug("{}{} runs at iteration = {}, user = {}/{}, distance = {}", algoName, foldInfo, iter, u + 1, numUsers, P.mult(Q.transpose()).minus(trainMatrix).norm() );
 				// diagonal matrix C^u for each user
 				DiagMatrix Cu = DiagMatrix.eye(numItems); // all entries on the diagonal will be 1
 				SparseVector pu = trainMatrix.row(u);
@@ -95,9 +121,19 @@ public class WRMF extends IterativeRecommender {
 				// Yt * Cu
 				DenseMatrix YtCu = Yt.mult(Cu);
 
-				DenseVector xu = Wu.mult(YtCu).mult(pu);
-
-				// udpate user factors
+				DenseVector xu = Wu.mult(YtCu.mult(pu) );
+				
+//				System.err.println( Yt.mult(CuI).mult(Y) );
+//				
+//				System.err.println( YtCuY );
+//
+//				System.err.println( DiagMatrix.eye(numFactors).scale(regU) );
+//				
+//				System.err.println( Wu );
+//				System.err.println( YtCu.mult(pu) );
+//				
+//				// udpate user factors
+//				System.err.println( xu );
 				X.setRow(u, xu);
 			}
 
@@ -106,7 +142,7 @@ public class WRMF extends IterativeRecommender {
 			DenseMatrix XtX = Xt.mult(X);
 			for (int i = 0; i < numItems; i++) {
 				if (verbose && (i + 1) % 200 == 0)
-					Logs.debug("{}{} runs at iteration = {}, item = {}/{}", algoName, foldInfo, iter, i + 1, numItems);
+					Logs.debug("{}{} runs at iteration = {}, item = {}/{}, distance = {}", algoName, foldInfo, iter, i + 1, numUsers, P.mult(Q.transpose()).minus(trainMatrix).norm() );
 
 				// diagonal matrix C^i for each item
 				DiagMatrix Ci = DiagMatrix.eye(numUsers);

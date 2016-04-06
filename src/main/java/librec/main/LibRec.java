@@ -103,6 +103,13 @@ import librec.util.Logs;
 import librec.util.Randoms;
 import librec.util.Strings;
 import librec.util.Systems;
+import nnm.recsys.contentbase.ContentBaseRecommender2;
+import nnm.recsys.contentbase.ContentBasedAmplified;
+import nnm.recsys.contentbase.ContentBasedCombined;
+import nnm.recsys.contentbase.ContentBasedSocial;
+import nnm.recsys.contentbase.lee.ContentBasedBoosting;
+import nnm.recsys.contentbase.lee.ContentBasedWeighting;
+import nnm.recsys.jointnetwork.JointNetwork;
 
 /**
  * Main Class of the LibRec Library
@@ -624,7 +631,7 @@ public class LibRec {
 	 */
 	private void printEvalInfo(Recommender algo, Map<Measure, Double> ms) throws Exception {
 
-		String result = Recommender.getEvalInfo(ms);
+		String result = algo.getEvalInfo(ms);
 		// we add quota symbol to indicate the textual format of time 
 		String time = String.format("'%s','%s'", Dates.parse(ms.get(Measure.TrainTime).longValue()),
 				Dates.parse(ms.get(Measure.TestTime).longValue()));
@@ -834,6 +841,20 @@ public class LibRec {
 			return new Amplified(trainMatrix, testMatrix, fold);
 		case "alswr":
 			return new ALSWR(trainMatrix, testMatrix, fold);
+		case "content-base":
+			return new ContentBaseRecommender2( trainMatrix,  testMatrix, fold );
+		case "content-base-combine":
+			return new ContentBasedCombined(trainMatrix, testMatrix, fold);
+		case "content-base-amplified":
+			return new ContentBasedAmplified(trainMatrix, testMatrix, fold);
+		case "content-base-social":
+			return new ContentBasedSocial(trainMatrix, testMatrix, fold);
+		case "content-base-weighting":
+			return new ContentBasedWeighting(trainMatrix, testMatrix, fold);
+		case "content-base-boosting":
+			return new ContentBasedBoosting(trainMatrix, testMatrix, fold);
+		case "joint":
+			return new JointNetwork(trainMatrix, testMatrix, fold);
 		default:
 			throw new Exception("No recommender is specified!");
 		}
